@@ -1,0 +1,10 @@
+# Built and downloaded folders
+target
+
+# Intellij Idea
+.idea
+*.iml
+
+# Eclipse
+.project
+.settings
