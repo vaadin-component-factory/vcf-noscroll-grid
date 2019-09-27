@@ -52,6 +52,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
           grid.$.table.removeEventListener("wheel", wheelHandler, false);
           grid.$.table.addEventListener('wheel', grid.$.table.__wheelListener); // add original wheel handler back
           grid.showMore();
+          e.stopImmediatePropagation();
       }
     };
 
