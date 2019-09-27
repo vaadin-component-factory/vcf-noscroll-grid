@@ -8,3 +8,7 @@ target
 # Eclipse
 .project
 .settings
+.classpath
+
+**/package-lock.json
+**/bower_components/
