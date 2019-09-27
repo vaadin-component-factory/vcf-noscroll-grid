@@ -9,6 +9,14 @@
     
 	<artifactId>noscroll-grid</artifactId>
 
+	<name>NoScrollGrid Flow Addon</name>
+	
+	<inceptionYear>2019</inceptionYear>
+    <organization>
+        <name>Vaadin Ltd</name>
+        <url>http://vaadin.com/</url>
+    </organization>
+    
 	<licenses>
         <license>
             <name>CVALv3</name>
@@ -25,6 +33,29 @@
 
     <build>
         <plugins>
+        	 <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>license-maven-plugin</artifactId>
+                <version>1.8</version>
+                <!--  Use `mvn license:update-file-header` to fix header problems -->
+                <configuration>
+                    <licenseName>cval3</licenseName>
+                    <licenseResolver>${project.baseUri}src/license</licenseResolver>
+                    <includes>
+                        <include>**/main/**/*.java</include>
+                    </includes>
+                    <failOnMissingHeader>true</failOnMissingHeader>
+                    <failOnNotUptodateHeader>true</failOnNotUptodateHeader>
+                </configuration>
+                <executions>
+                	<execution>
+                        <goals>
+                            <goal>check-file-header</goal>
+                        </goals>
+                        <phase>process-sources</phase>
+                    </execution>
+                </executions>
+            </plugin>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-jar-plugin</artifactId>

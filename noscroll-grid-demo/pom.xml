@@ -9,6 +9,8 @@
     
 	<artifactId>noscroll-grid-demo</artifactId>
 
+	<name>NoScrollGrid Flow Addon Demo</name>
+	
 	 <properties>
         <jetty.version>9.4.15.v20190215</jetty.version>
     </properties>
