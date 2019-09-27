@@ -44,7 +44,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 	private Registration dataProviderListener;
 	
 	/**
-	 * @see {@link Grid#Grid()}
+	 * @see com.vaadin.flow.component.grid.Grid#Grid()
 	 */
 	public NoScrollGrid() {
 		super();
@@ -52,7 +52,9 @@ public class NoScrollGrid<T> extends Grid<T> {
 	}
 
 	/**
-	 * @see {@link Grid#Grid(int)}
+	 * @see com.vaadin.flow.component.grid.Grid#Grid(int pageSize)
+	 * @param pageSize
+     *            the page size. Must be greater than zero.
 	 */
 	public NoScrollGrid(int pageSize) {
 		super(pageSize);
@@ -60,7 +62,9 @@ public class NoScrollGrid<T> extends Grid<T> {
 	}
 
 	/**
-	 * @see {@link Grid#Grid(beanType)}
+	 * @see com.vaadin.flow.component.grid.Grid#Grid(Class beanType)
+	 * @param beanType
+     *            the bean type to use, not <code>null</code>
 	 */
 	public NoScrollGrid(Class<T> beanType) {
 		super(beanType);
@@ -68,7 +72,12 @@ public class NoScrollGrid<T> extends Grid<T> {
 	}
 
 	/**
-	 * @see {@link Grid#Grid(beanType, autoCreateColumns)}
+	 * @see com.vaadin.flow.component.grid.Grid#Grid(Class beanType, boolean autoCreateColumns)
+	 * @param beanType
+     *            the bean type to use, not <code>null</code>
+     * @param autoCreateColumns
+     *            when <code>true</code>, columns are created automatically for
+     *            the properties of the beanType
 	 */
 	public NoScrollGrid(Class<T> beanType, boolean autoCreateColumns) {
 		super(beanType, autoCreateColumns);
