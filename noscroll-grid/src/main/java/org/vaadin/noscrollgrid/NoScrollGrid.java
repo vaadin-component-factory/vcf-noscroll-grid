@@ -16,8 +16,21 @@ import com.vaadin.flow.shared.Registration;
  * being set explicitly.
  * <p>
  * Adjust number of rows to show when scrolling to bottom of scroll container
- * element with {@link #setRowsShownMore(int)}. Or alternatively adjust pixel
- * size to show with {@link #setHeightShownMore(int)}.
+ * element with {@link #setRowsShownMoreOnScrollToBottom(int)}. Real space that is show more in
+ * grid is based on calculating average row height from the currently visible
+ * rows. This means that if row heights varies a lot, real number of rows being
+ * shown is not that accurate.
+ * </p>
+ * <p>
+ * If scroll container does not have visible vertical scroll bar initially, then
+ * mouse wheel down or touch event will trigger {@link #showMore()} to increase
+ * grid size if there are any more rows.
+ * </p>
+ * <p>
+ * Initial height set with
+ * {@link #setHeight(String)}/{@link #setSizeFull()}/{@link #setHeightFull()} is
+ * always reverted back when data provider changes its items by
+ * filtering/adding/removing.
  * </p>
  * 
  * @author Vaadin Ltd
@@ -30,20 +43,36 @@ public class NoScrollGrid<T> extends Grid<T> {
 
 	private Registration dataProviderListener;
 	
+	/**
+	 * @see {@link Grid#Grid()}
+	 */
 	public NoScrollGrid() {
 		super();
+		setRowsShownMoreOnScrollToBottom(getPageSize());
 	}
 
+	/**
+	 * @see {@link Grid#Grid(int)}
+	 */
 	public NoScrollGrid(int pageSize) {
 		super(pageSize);
+		setRowsShownMoreOnScrollToBottom(getPageSize());
 	}
 
+	/**
+	 * @see {@link Grid#Grid(beanType)}
+	 */
 	public NoScrollGrid(Class<T> beanType) {
 		super(beanType);
+		setRowsShownMoreOnScrollToBottom(getPageSize());
 	}
 
+	/**
+	 * @see {@link Grid#Grid(beanType, autoCreateColumns)}
+	 */
 	public NoScrollGrid(Class<T> beanType, boolean autoCreateColumns) {
 		super(beanType, autoCreateColumns);
+		setRowsShownMoreOnScrollToBottom(getPageSize());
 	}
 	
 	@Override
@@ -73,23 +102,24 @@ public class NoScrollGrid<T> extends Grid<T> {
 		getElement().callFunction("showMore");
 	}
 	
-	public void setHeightShownMore(int heightPx) {
-		getElement().callFunction("setShowMoreSize", heightPx);
-	}
-	
-	public void setRowsShownMore(int rows) {
+	/**
+	 * Set how many rows is shown more in grid on scroll to bottom.
+	 * 
+	 * @param rows number of rows to show more
+	 */
+	public void setRowsShownMoreOnScrollToBottom(int rows) {
 		if(rows<1) {
 			throw new IllegalArgumentException(getClass().getSimpleName()
-					+ ".setRowsShownMore(rows) requires integer larger than zero for 'rows'");
+					+ ".setRowsShownMoreOnScrollToBottom(rows) requires integer larger than zero for 'rows'");
 		}
-		getElement().callFunction("setShowMoreRows", rows);
+		getElement().callFunction("setRowsShownMoreOnScrollToBottom", rows);
 	}
 	
 	/**
-	 * Set target scroll container with vertical scroll bar. Does not add vertical
-	 * scroll bar. Adds listener to given element for scroll event into bottom to
-	 * show more rows in grid. If element does not have visible scroll bar, then it
-	 * listens for mouse wheel event and touch event to show more.
+	 * Set target scroll container. Does not add vertical scroll bar. Adds listener
+	 * to given element for scroll event into bottom to show more rows in grid. If
+	 * element does not have visible scroll bar, then it listens for mouse wheel
+	 * event and touch event to show more.
 	 * 
 	 * @param targetScrollContainer Target scroll container element. For example
 	 *                              body or div.
@@ -98,5 +128,10 @@ public class NoScrollGrid<T> extends Grid<T> {
 		Objects.requireNonNull(targetScrollContainer, getClass().getSimpleName()
 				+ ".setShowMoreOnScrollToBottom(targetScrollContainer) requires non-null target element. One target scroll container per grid instance.");
 		getElement().callFunction("setShowMoreOnScrollToBottom", targetScrollContainer);
+	}
+	
+	@Override
+	public void setHeightByRows(boolean heightByRows) {
+		throw new UnsupportedOperationException(getClass().getSimpleName() + " does not support setHeightByRows(int).");
 	}
 }

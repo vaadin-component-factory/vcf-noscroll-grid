@@ -9,7 +9,6 @@ window.Vaadin.Flow.noscrollGridConnector = {
 
     grid.pageSize = pageSize;
 
-    grid.$noscrollConnector.showMoreSize = null;
     grid.$noscrollConnector.showMoreRows = 20;
 
     grid.$noscrollConnector.prevTouchScrollTop = 0;
@@ -56,14 +55,8 @@ window.Vaadin.Flow.noscrollGridConnector = {
       }
     };
 
-    grid.setShowMoreSize = function(sizePx) {
-      this.$noscrollConnector.showMoreSize = sizePx;
-      grid.$noscrollConnector.showMoreRows = null;
-    }
-
-    grid.setShowMoreRows = function(rowCount) {
+    grid.setRowsShownMoreOnScrollToBottom = function(rowCount) {
       grid.$noscrollConnector.showMoreRows = rowCount;
-      this.$noscrollConnector.showMoreSize = null;
     }
 
     grid.setShowMoreOnScrollToBottom = function(target) {
@@ -93,8 +86,8 @@ window.Vaadin.Flow.noscrollGridConnector = {
       grid.$.table.addEventListener("wheel", wheelHandler);
     }
 
-    /* 'showMore' adjusts grid height. Increases height by showMoreSize or showMoreRows when there are more items to show.
-    *  Or decreases height remove all extra space below last row. */
+    /* 'showMore' adjusts grid height. Increases height by showMoreRows when there are more items to show.
+    *  Or decreases height by removing all extra space below last row. */
     grid.showMore = function() {
       let newGridHeight = this.$.scroller.clientHeight + grid.$noscrollConnector.getShowMorePixelSize();
       this.style.height = newGridHeight + 'px';
@@ -112,11 +105,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
     }
 
     grid.$noscrollConnector.getShowMorePixelSize = function() {
-      if(grid.$noscrollConnector.showMoreRows) {
-        return grid.$noscrollConnector.showMoreRows * Math.ceil(grid._physicalSize / grid._physicalCount);
-      } else {
-        return grid.$noscrollConnector.showMoreSize;
-      }
+      return grid.$noscrollConnector.showMoreRows * Math.ceil(grid._physicalSize / grid._physicalCount);
     }
 
     grid.$connector.fetchPageOriginal = grid.$connector.fetchPage;

@@ -16,6 +16,13 @@
 		<url>http://vaadin.com/</url>
 	</organization>
 
+	<licenses>
+        <license>
+            <name>CVALv3</name>
+            <url>https://vaadin.com/license/cval-3</url>
+        </license>
+    </licenses>
+    
 	<properties>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>

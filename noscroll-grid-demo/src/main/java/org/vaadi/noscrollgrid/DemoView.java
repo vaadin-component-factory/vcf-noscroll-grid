@@ -30,7 +30,6 @@ public class DemoView extends Div {
 		 layout.setSizeFull();
 		 
 		 NoScrollGrid<Item> grid = new NoScrollGrid<>(20);
-		 grid.setRowsShownMore(20);
 		 grid.setShowMoreOnScrollToBottom(getElement());
 		 grid.setHeightFull();
 		 
@@ -55,11 +54,12 @@ public class DemoView extends Div {
 		 VerticalLayout leftSide = new VerticalLayout();
 		 leftSide.setWidth("400px");
 		 
-		 TextField nameFilterField = new TextField(null, "Search by name");
+		 TextField nameFilterField = new TextField("Name filter", "Search by name");
 		 nameFilterField.addValueChangeListener(event -> dataprovider
 				.addFilter(item -> StringUtils.containsIgnoreCase(item.getName(), nameFilterField.getValue())));
-		 leftSide.add(nameFilterField, addItemsButton, remItemsButton);
 		 nameFilterField.setValueChangeMode(ValueChangeMode.EAGER);
+		 
+		 leftSide.add(nameFilterField, addItemsButton, remItemsButton);
 		 
 		 layout.add(leftSide, grid);
 		 layout.setFlexGrow(1f, grid);
