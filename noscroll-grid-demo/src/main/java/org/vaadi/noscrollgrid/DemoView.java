@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils;
 import org.fluttercode.datafactory.impl.DataFactory;
 import org.vaadi.noscrollgrid.data.Item;
-import org.vaadin.noscrollgrid.NoScrollGrid;
+import org.vaadin.componentfactory.NoScrollGrid;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;

@@ -1,4 +1,4 @@
-package org.vaadin.noscrollgrid;
+package org.vaadin.componentfactory;
 
 /*
  * #%L
