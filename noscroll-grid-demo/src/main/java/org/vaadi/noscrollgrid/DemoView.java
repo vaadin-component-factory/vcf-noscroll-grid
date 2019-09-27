@@ -11,6 +11,7 @@ import org.vaadi.noscrollgrid.data.Item;
 import org.vaadin.noscrollgrid.NoScrollGrid;
 
 import com.vaadin.flow.component.button.Button;
+import com.vaadin.flow.component.checkbox.Checkbox;
 import com.vaadin.flow.component.html.Div;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
@@ -35,7 +36,7 @@ public class DemoView extends Div {
 		 
 		 grid.addColumn(Item::getName).setHeader("Name").setSortable(true).setFooter("Footer");
 		 grid.addColumn(Item::getAge).setHeader("Age").setSortable(true);
-		 grid.addColumn(Item::getDob).setHeader("Birth date").setSortable(true);
+		 grid.addColumn(Item::getDob).setHeader("Birth date").setWidth("200px").setSortable(true);
 		 
 		 ListDataProvider<Item> dataprovider = new ListDataProvider<Item>(generateDummyItems(10));
 		 grid.setDataProvider(dataprovider);
@@ -50,6 +51,14 @@ public class DemoView extends Div {
 			 dataprovider.getItems().clear();
 			 dataprovider.refreshAll();
 		 });
+		 Checkbox setWideColumnButton = new Checkbox("Make grid content wide");
+		 setWideColumnButton.addValueChangeListener(event -> {
+			 if(event.getValue()) {
+				 grid.getColumns().get(grid.getColumns().size()-1).setWidth("2000px");
+			 } else {
+				 grid.getColumns().get(grid.getColumns().size()-1).setWidth("200px");
+			 }
+		 });
 		 
 		 VerticalLayout leftSide = new VerticalLayout();
 		 leftSide.setWidth("400px");
@@ -59,7 +68,7 @@ public class DemoView extends Div {
 				.addFilter(item -> StringUtils.containsIgnoreCase(item.getName(), nameFilterField.getValue())));
 		 nameFilterField.setValueChangeMode(ValueChangeMode.EAGER);
 		 
-		 leftSide.add(nameFilterField, addItemsButton, remItemsButton);
+		 leftSide.add(nameFilterField, addItemsButton, remItemsButton, setWideColumnButton);
 		 
 		 layout.add(leftSide, grid);
 		 layout.setFlexGrow(1f, grid);

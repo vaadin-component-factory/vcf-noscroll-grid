@@ -16,6 +16,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
     grid.$noscrollConnector.targetElement = null;
     grid.$noscrollConnector.targetScrollTopElement = null;
 
+    grid.$noscrollConnector.scrollbarWidth = grid._scrollbarWidth;
     grid.$noscrollConnector.initialHeight = grid.style.height;
     grid.style.minHeight = grid.$noscrollConnector.initialHeight;
 
@@ -92,7 +93,14 @@ window.Vaadin.Flow.noscrollGridConnector = {
       let newGridHeight = this.$.scroller.clientHeight + grid.$noscrollConnector.getShowMorePixelSize();
       this.style.height = newGridHeight + 'px';
       this.notifyResize();
+
+      const table = this.$.table;
       let contentHeight = this.$.items.clientHeight + this.$.header.clientHeight + this.$.footer.clientHeight;
+      if((table.scrollLeft < table.scrollWidth - table.clientWidth) || table.scrollLeft > 0) {
+        // grid has horizontal scroll bar
+        contentHeight += grid.$noscrollConnector.scrollbarWidth;
+      }
+
       if(contentHeight < newGridHeight) {
         this.style.height = contentHeight + 'px';
         this.notifyResize();
