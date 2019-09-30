@@ -8,11 +8,14 @@
 	</parent>
     
 	<artifactId>noscroll-grid-demo</artifactId>
-
+	
 	<name>NoScrollGrid Flow Addon Demo</name>
+	
+	<packaging>war</packaging>
 	
 	 <properties>
         <jetty.version>9.4.15.v20190215</jetty.version>
+        <failOnMissingWebXml>false</failOnMissingWebXml>
     </properties>
 	
     <dependencies>
@@ -111,9 +114,9 @@
                     <!-- Use test scope because the UI/demo classes are in
                             the test package. -->
                     <useTestScope>true</useTestScope>
-                    <supportedPackagings>
+                    <!-- <supportedPackagings>
                         <supportedPackaging>jar</supportedPackaging>
-                    </supportedPackagings>
+                    </supportedPackagings> -->
                 </configuration>
             </plugin>
         </plugins>
