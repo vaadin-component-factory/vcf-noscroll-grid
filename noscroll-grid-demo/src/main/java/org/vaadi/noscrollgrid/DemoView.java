@@ -46,7 +46,7 @@ public class DemoView extends Div {
 			 dataprovider.getItems().addAll(generateDummyItems(10));
 			 dataprovider.refreshAll();
 		 });
-		 Button remItemsButton = new Button("Remove all items to Grid");
+		 Button remItemsButton = new Button("Remove all items from Grid");
 		 remItemsButton.addClickListener(event -> {
 			 dataprovider.getItems().clear();
 			 dataprovider.refreshAll();
