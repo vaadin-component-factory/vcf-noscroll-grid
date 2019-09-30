@@ -1,4 +1,4 @@
-package org.vaadi.noscrollgrid;
+package org.vaadin.noscrollgrid;
 
 import java.time.LocalDate;
 import java.time.ZoneId;
@@ -7,8 +7,8 @@ import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
 import org.fluttercode.datafactory.impl.DataFactory;
-import org.vaadi.noscrollgrid.data.Item;
 import org.vaadin.componentfactory.NoScrollGrid;
+import org.vaadin.noscrollgrid.data.Item;
 
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.checkbox.Checkbox;

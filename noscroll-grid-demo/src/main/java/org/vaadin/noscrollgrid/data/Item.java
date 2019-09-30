@@ -1,4 +1,4 @@
-package org.vaadi.noscrollgrid.data;
+package org.vaadin.noscrollgrid.data;
 
 import java.time.LocalDate;
 
