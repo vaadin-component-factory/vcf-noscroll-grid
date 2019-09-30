@@ -61,7 +61,7 @@
 		    <artifactId>flow-server-compatibility-mode</artifactId>
 		</dependency> -->
 		
-        <!-- Dummyy data generator --> 
+        <!-- Dummy data generator --> 
         <dependency>
 			<groupId>org.fluttercode.datafactory</groupId>
 			<artifactId>datafactory</artifactId>

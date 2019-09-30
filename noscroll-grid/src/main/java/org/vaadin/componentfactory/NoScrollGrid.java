@@ -17,12 +17,15 @@ package org.vaadin.componentfactory;
 
 import java.util.Objects;
 
+import com.vaadin.flow.component.UI;
 import com.vaadin.flow.component.dependency.JavaScript;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.provider.DataChangeEvent.DataRefreshEvent;
 import com.vaadin.flow.data.provider.DataProvider;
 import com.vaadin.flow.dom.Element;
+import com.vaadin.flow.internal.UsageStatistics;
 import com.vaadin.flow.shared.Registration;
+import com.vaadin.pro.licensechecker.LicenseChecker;
 
 /**
  * {@link Grid} with disabled vertical scrolling and option to delegate
@@ -56,6 +59,9 @@ import com.vaadin.flow.shared.Registration;
 @JavaScript("frontend://noscroll-grid.js")
 public class NoScrollGrid<T> extends Grid<T> {
 
+	private static String PROJECT_VERSION = "1.0.0";
+    private static String PROJECT_NAME = "vaadin-noscroll-grid";
+    
 	private Registration dataProviderListener;
 	
 	/**
@@ -63,7 +69,6 @@ public class NoScrollGrid<T> extends Grid<T> {
 	 */
 	public NoScrollGrid() {
 		super();
-		setRowsShownMoreOnScrollToBottom(getPageSize());
 	}
 
 	/**
@@ -74,6 +79,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 	public NoScrollGrid(int pageSize) {
 		super(pageSize);
 		setRowsShownMoreOnScrollToBottom(getPageSize());
+		verifyLicense(UI.getCurrent().getSession().getConfiguration().isProductionMode());
 	}
 
 	/**
@@ -83,7 +89,6 @@ public class NoScrollGrid<T> extends Grid<T> {
 	 */
 	public NoScrollGrid(Class<T> beanType) {
 		super(beanType);
-		setRowsShownMoreOnScrollToBottom(getPageSize());
 	}
 
 	/**
@@ -96,7 +101,6 @@ public class NoScrollGrid<T> extends Grid<T> {
 	 */
 	public NoScrollGrid(Class<T> beanType, boolean autoCreateColumns) {
 		super(beanType, autoCreateColumns);
-		setRowsShownMoreOnScrollToBottom(getPageSize());
 	}
 	
 	@Override
@@ -157,5 +161,12 @@ public class NoScrollGrid<T> extends Grid<T> {
 	@Override
 	public void setHeightByRows(boolean heightByRows) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + " does not support setHeightByRows(int).");
+	}
+	
+	private void verifyLicense(boolean productionMode) {
+		if (!productionMode) {
+			LicenseChecker.checkLicense(PROJECT_NAME, PROJECT_VERSION);
+			UsageStatistics.markAsUsed(PROJECT_NAME, PROJECT_VERSION);
+		}
 	}
 }
