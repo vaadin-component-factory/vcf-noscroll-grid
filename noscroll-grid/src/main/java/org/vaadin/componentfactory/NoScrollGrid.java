@@ -113,6 +113,9 @@ public class NoScrollGrid<T> extends Grid<T> {
 				getElement(), getPageSize());
 	}
 	
+	/**
+	 * @see com.vaadin.flow.component.grid.Grid#setDataProvider(com.vaadin.flow.data.provider.DataProvider dataProvider)
+	 */
 	@Override
 	public void setDataProvider(DataProvider<T, ?> dataProvider) {
 		if(dataProviderListener != null) {
@@ -126,6 +129,11 @@ public class NoScrollGrid<T> extends Grid<T> {
         });
 	}
 	
+	/**
+	 * Increases grid size by approximate height needed for number of rows given via
+	 * {@link #setRowsShownMoreOnScrollToBottom(int)}. Or less, if data provider
+	 * does not have more rows to show.
+	 */
 	public void showMore() {
 		getElement().callFunction("showMore");
 	}
@@ -158,6 +166,9 @@ public class NoScrollGrid<T> extends Grid<T> {
 		getElement().callFunction("setShowMoreOnScrollToBottom", targetScrollContainer);
 	}
 	
+	/**
+	 * @throws UnsupportedOperationException
+	 */
 	@Override
 	public void setHeightByRows(boolean heightByRows) {
 		throw new UnsupportedOperationException(getClass().getSimpleName() + " does not support setHeightByRows(int).");
