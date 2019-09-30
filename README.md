@@ -36,7 +36,7 @@ mvn clean install
 
 ## Running demo
 
-Starting the demo server at /demo:
+Starting the demo server at /noscroll-grid-demo:
 ```
 cd noscroll-grid-demo
 mvn jetty:run
