@@ -4,17 +4,10 @@ window.Vaadin.Flow.noscrollGridConnector = {
       return;
     }
     grid.$noscrollConnector = {};
-
-    grid.$connector.setVerticalScrollingEnabled(false);
-
-    grid.pageSize = pageSize;
-
+    grid.$noscrollConnector.pageSize = pageSize;
     grid.$noscrollConnector.initialScrollDone = false;
-
     grid.$noscrollConnector.showMoreRows = 20;
-
     grid.$noscrollConnector.prevTouchScrollTop = 0;
-
     grid.$noscrollConnector.targetElement = null;
     grid.$noscrollConnector.targetScrollTopElement = null;
 
@@ -90,6 +83,9 @@ window.Vaadin.Flow.noscrollGridConnector = {
       if(!target) {
         return;
       }
+      grid.pageSize = grid.$noscrollConnector.pageSize;
+      grid.$connector.setVerticalScrollingEnabled(false);
+
       grid.$noscrollConnector.initialScrollDone = false;
       grid.$noscrollConnector.targetElement = target;
       grid.$noscrollConnector.targetScrollTopElement = target;
@@ -117,6 +113,9 @@ window.Vaadin.Flow.noscrollGridConnector = {
     /* 'showMore' adjusts grid height. Increases height by showMoreRows when there are more items to show.
     *  Or decreases height by removing all extra space below last row. */
     grid.showMore = function() {
+      if(!grid.$noscrollConnector.targetElement) {
+        return;
+      }
       let newGridHeight = this.$.scroller.clientHeight + grid.$noscrollConnector.getShowMorePixelSize();
       this.style.height = newGridHeight + 'px';
       this.notifyResize();
@@ -146,6 +145,10 @@ window.Vaadin.Flow.noscrollGridConnector = {
     grid.$connector.fetchPageOriginal = grid.$connector.fetchPage;
     /* overriding gridConnector.js implementation to adjust buffer logic */
     grid.$connector.fetchPage = function(fetch, page, parentKey) {
+      if(!grid.$noscrollConnector.targetElement) {
+        grid.$connector.fetchPageOriginal(fetch, page, parentKey);
+        return;
+      }
       /* lets make sure that buffer is always same as given page size. Originally it would be number of visible rows.  */
       let start = grid._virtualStart;
       let physicalCount = grid._physicalCount;
@@ -161,6 +164,10 @@ window.Vaadin.Flow.noscrollGridConnector = {
 
     /* overriding function _scrollHandler to make sure that keyboard navigation do not scroll */
     grid._scrollHandler = function() {
+      if(!grid.$noscrollConnector.targetElement) {
+        Vaadin.GridElement.prototype._scrollHandler.call(grid);
+        return;
+      }
       grid.$.table.scrollTop = 0; // this will block scrolling
       if(!grid.$noscrollConnector.initialScrollDone) {
         grid.$noscrollConnector.clearAllWheelTouchListeners();

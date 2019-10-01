@@ -63,6 +63,7 @@ public class NoScrollGrid<T> extends Grid<T> {
     private static String PROJECT_NAME = "vcf-noscroll-grid";
     
 	private Registration dataProviderListener;
+	private Element targetScrollContainer;
 	
 	/**
 	 * @see com.vaadin.flow.component.grid.Grid#Grid()
@@ -123,7 +124,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 		}
 		super.setDataProvider(dataProvider);
 		dataProviderListener = dataProvider.addDataProviderListener(event -> {
-            if (!(event instanceof DataRefreshEvent)) {
+            if (targetScrollContainer != null && !(event instanceof DataRefreshEvent)) {
             	getElement().callFunction("resetHeight");
             }
         });
@@ -163,15 +164,8 @@ public class NoScrollGrid<T> extends Grid<T> {
 	public void setShowMoreOnScrollToBottom(Element targetScrollContainer) {
 		Objects.requireNonNull(targetScrollContainer, getClass().getSimpleName()
 				+ ".setShowMoreOnScrollToBottom(targetScrollContainer) requires non-null target element. One target scroll container per grid instance.");
+		this.targetScrollContainer = targetScrollContainer;
 		getElement().callFunction("setShowMoreOnScrollToBottom", targetScrollContainer);
-	}
-	
-	/**
-	 * @throws UnsupportedOperationException
-	 */
-	@Override
-	public void setHeightByRows(boolean heightByRows) {
-		throw new UnsupportedOperationException(getClass().getSimpleName() + " does not support setHeightByRows(int).");
 	}
 	
 	private void verifyLicense(boolean productionMode) {
