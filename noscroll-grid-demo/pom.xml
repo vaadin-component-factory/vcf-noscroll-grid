@@ -54,7 +54,7 @@
             </exclusions> -->
         </dependency>
         <dependency>
-        	<groupId>org.vaadin.noscrollgrid</groupId>
+        	<groupId>org.vaadin.componentfactory</groupId>
         	<artifactId>noscroll-grid</artifactId>
         	<version>${project.version}</version>
         </dependency>
