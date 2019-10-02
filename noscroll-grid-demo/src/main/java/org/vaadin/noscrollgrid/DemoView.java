@@ -26,9 +26,12 @@ public class DemoView extends Div {
 	 public DemoView() {
 		 setSizeFull();
 		 getStyle().set("overflow", "auto");
+		 getStyle().set("display", "flex");
+		 getStyle().set("flex-direction", "column");
 		 
 		 HorizontalLayout layout = new HorizontalLayout();
-		 layout.setSizeFull();
+		 layout.setWidthFull();
+		 layout.getStyle().set("flex-grow", "1");
 		 
 		 NoScrollGrid<Item> grid = new NoScrollGrid<>(20);
 		 grid.setShowMoreOnScrollToBottom(getElement());
