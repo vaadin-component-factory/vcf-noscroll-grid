@@ -26,25 +26,35 @@ window.Vaadin.Flow.noscrollGridConnector = {
     };
     const regularTouchMoveHandler = e => {
       grid.$noscrollConnector.targetScrollTopElement.removeEventListener("touchmove", regularTouchMoveHandler, false);
+      grid.$noscrollConnector.targetScrollTopElement.removeEventListener("pointermove", regularTouchMoveHandler, false);
       grid.$noscrollConnector.targetScrollTopElement.removeEventListener("wheel", wheelHandler, false);
       grid.$.table.removeEventListener("wheel", wheelHandler, false);
       grid.$.table.addEventListener('wheel', grid.$.table.__wheelListener);
       grid.$noscrollConnector.initialScrollDone = true;
+      grid.$noscrollConnector.targetElement.style.touchAction = "auto";
+      grid.style.touchAction = "auto";
+      grid.$.scroller.style.touchAction = "auto";
       grid.showMore();
     };
     const bodyTouchMoveHandler = e => {
       grid.$noscrollConnector.targetScrollTopElement.removeEventListener("touchmove", bodyTouchMoveHandler, false);
+      grid.$noscrollConnector.targetScrollTopElement.removeEventListener("pointermove", bodyTouchMoveHandler, false);
       grid.$noscrollConnector.targetScrollTopElement.removeEventListener("wheel", wheelHandler, false);
       grid.$.table.removeEventListener("wheel", wheelHandler, false);
       grid.$.table.addEventListener('wheel', grid.$.table.__wheelListener);
       grid.$noscrollConnector.initialScrollDone = true;
+      grid.$noscrollConnector.targetElement.style.touchAction = "auto";
+      grid.style.touchAction = "auto";
+      grid.$.scroller.style.touchAction = "auto";
       grid.showMore();
     };
     const wheelHandler = e => {
       if(e.deltaY > 0) {
           grid.$noscrollConnector.targetScrollTopElement.removeEventListener("wheel", wheelHandler, false);
           grid.$noscrollConnector.targetScrollTopElement.removeEventListener("touchmove", regularTouchMoveHandler, false);
+          grid.$noscrollConnector.targetScrollTopElement.removeEventListener("pointermove", regularTouchMoveHandler, false);
           grid.$noscrollConnector.targetScrollTopElement.removeEventListener("touchmove", bodyTouchMoveHandler, false);
+          grid.$noscrollConnector.targetScrollTopElement.removeEventListener("pointermove", bodyTouchMoveHandler, false);
           grid.$.table.removeEventListener("wheel", wheelHandler, false);
           grid.$.table.addEventListener('wheel', grid.$.table.__wheelListener); // add original wheel handler back
           grid.$noscrollConnector.initialScrollDone = true;
@@ -70,6 +80,8 @@ window.Vaadin.Flow.noscrollGridConnector = {
     grid.$noscrollConnector.clearAllWheelTouchListeners = function() {
       grid.$noscrollConnector.targetElement.removeEventListener("touchmove", regularTouchMoveHandler);
       grid.$noscrollConnector.targetElement.removeEventListener("touchmove", bodyTouchMoveHandler);
+      grid.$noscrollConnector.targetElement.removeEventListener("pointermove", regularTouchMoveHandler);
+      grid.$noscrollConnector.targetElement.removeEventListener("pointermove", bodyTouchMoveHandler);
       grid.$noscrollConnector.targetScrollTopElement.removeEventListener("wheel", wheelHandler);
       grid.$.table.removeEventListener("wheel", wheelHandler);
     }
@@ -94,13 +106,26 @@ window.Vaadin.Flow.noscrollGridConnector = {
       grid.$noscrollConnector.targetScrollTopElement.removeEventListener("scroll", bodyScrollHandler);
       grid.$noscrollConnector.clearAllWheelTouchListeners();
 
+      const msTouch = !!(navigator.maxTouchPoints > 0);
       if(target === document.body) {
         grid.$noscrollConnector.targetScrollTopElement = window;
+        if(msTouch) {
+          grid.$noscrollConnector.targetElement.style.touchAction = "none";
+          grid.style.touchAction = "none";
+          grid.$.scroller.style.touchAction = "none";
+          grid.$noscrollConnector.targetElement.addEventListener("pointermove", bodyTouchMoveHandler);
+        } else {
+          grid.$noscrollConnector.targetElement.addEventListener("touchmove", bodyTouchMoveHandler);
+        }
         grid.$noscrollConnector.targetScrollTopElement.addEventListener("scroll", bodyScrollHandler);
-        grid.$noscrollConnector.targetElement.addEventListener("touchmove", bodyTouchMoveHandler);
       } else {
+        if(msTouch) {
+          grid.$noscrollConnector.targetElement.style.touchAction = "none";
+          grid.$noscrollConnector.targetElement.addEventListener("pointermove", regularTouchMoveHandler);
+        } else {
+          grid.$noscrollConnector.targetElement.addEventListener("touchmove", regularTouchMoveHandler);
+        }
         grid.$noscrollConnector.targetElement.addEventListener("scroll", regularScrollHandler);
-        grid.$noscrollConnector.targetElement.addEventListener("touchmove", regularTouchMoveHandler);
       }
       grid.$noscrollConnector.targetScrollTopElement.addEventListener("wheel", wheelHandler);
       grid.$.table.removeEventListener('wheel', grid.$.table.__wheelListener); // blocks wheel if not removed
