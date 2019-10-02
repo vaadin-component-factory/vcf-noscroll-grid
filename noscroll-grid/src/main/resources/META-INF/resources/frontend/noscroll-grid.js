@@ -13,7 +13,6 @@ window.Vaadin.Flow.noscrollGridConnector = {
 
     grid.$noscrollConnector.scrollbarWidth = grid._scrollbarWidth;
     grid.$noscrollConnector.initialHeight = grid.style.height;
-    grid.style.minHeight = grid.$noscrollConnector.initialHeight;
 
     const regularScrollHandler = e => {
       if(grid.$noscrollConnector.targetElement.offsetHeight + grid.$noscrollConnector.targetElement.scrollTop >= grid.$noscrollConnector.targetElement.scrollHeight) {
@@ -83,6 +82,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
       if(!target) {
         return;
       }
+      grid.style.minHeight = grid.$noscrollConnector.initialHeight;
       grid.pageSize = grid.$noscrollConnector.pageSize;
       grid.$connector.setVerticalScrollingEnabled(false);
 
