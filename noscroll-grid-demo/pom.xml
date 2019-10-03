@@ -68,11 +68,11 @@
             <groupId>com.vaadin</groupId>
             <!-- Replace artifactId with vaadin-core to use only free components -->
             <artifactId>vaadin-core</artifactId>
-            <!-- <exclusions> -->
+            <exclusions>
                 <!-- Webjars are only needed when running in Vaadin 13 compatibility mode in V14.
                      Your add-on can support npm in the same version mode and V13 compatiblity mode at the same time,
                      or with separate versions. Any V13 version should work with the compatibility mode in V14. -->
-                <!-- <exclusion>
+                <exclusion>
                     <groupId>com.vaadin.webjar</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
@@ -96,7 +96,7 @@
                     <groupId>org.webjars.bowergithub.webcomponents</groupId>
                     <artifactId>*</artifactId>
                 </exclusion>
-            </exclusions> -->
+            </exclusions>
         </dependency>
         <dependency>
         	<groupId>org.vaadin.componentfactory</groupId>
@@ -138,7 +138,7 @@
                     </archive>
                 </configuration>
             </plugin>
-            <!-- plugin>
+            <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>${vaadin.version}</version>
@@ -149,7 +149,7 @@
                         </goals>
                     </execution>
                 </executions>
-            </plugin-->
+            </plugin>
             <plugin>
                 <groupId>org.eclipse.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
@@ -190,9 +190,7 @@
                         <executions>
                             <execution>
                                 <goals>
-                                	<goal>copy-production-files</goal>
-                                    <goal>package-for-production</goal>
-                                    <!-- <goal>build-frontend</goal> -->
+                                    <goal>build-frontend</goal>
                                 </goals>
                             </execution>
                         </executions>

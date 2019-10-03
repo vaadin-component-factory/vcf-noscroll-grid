@@ -3,6 +3,9 @@ window.Vaadin.Flow.noscrollGridConnector = {
     if(grid.$noscrollConnector) {
       return;
     }
+
+    const GridElement = window.Vaadin.Flow.Legacy.GridElement;
+
     grid.$noscrollConnector = {};
     grid.$noscrollConnector.pageSize = pageSize;
     grid.$noscrollConnector.initialScrollDone = false;
@@ -233,7 +236,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
     /* overriding function _scrollHandler to make sure that keyboard navigation do not scroll */
     grid._scrollHandler = function() {
       if(!grid.$noscrollConnector.targetElement || !grid.$noscrollConnector._keyDown) {
-        Vaadin.GridElement.prototype._scrollHandler.call(grid);
+        GridElement.prototype._scrollHandler.call(grid);
         return;
       }
       grid.$.table.scrollTop = 0; // this will block scrolling
@@ -242,7 +245,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
         grid.$noscrollConnector.initialScrollDone = true;
       }
       grid.showMore();
-      Vaadin.GridElement.prototype._scrollHandler.call(grid);
+      GridElement.prototype._scrollHandler.call(grid);
     }
 
   }
