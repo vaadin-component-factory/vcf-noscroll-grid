@@ -94,7 +94,9 @@ window.Vaadin.Flow.noscrollGridConnector = {
       if(!target) {
         return;
       }
-      grid.style.minHeight = grid.$noscrollConnector.initialHeight;
+      if(!grid.style.minHeight) {
+        grid.style.minHeight = grid.$noscrollConnector.initialHeight;
+      }
       grid.pageSize = grid.$noscrollConnector.pageSize;
       grid.$connector.setVerticalScrollingEnabled(false);
 
