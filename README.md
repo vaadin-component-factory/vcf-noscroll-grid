@@ -43,6 +43,8 @@ mvn jetty:run
 ```
 
 This deploys demo at http://localhost:8080
+  
+See demo page for body-element as scroll container at http://localhost:8080/body
 
 ## Contributing
 
