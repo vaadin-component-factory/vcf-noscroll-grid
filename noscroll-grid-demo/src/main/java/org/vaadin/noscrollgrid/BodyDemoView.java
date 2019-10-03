@@ -63,12 +63,12 @@ public class BodyDemoView extends VerticalLayout {
 		 ListDataProvider<Item> dataprovider = new ListDataProvider<Item>(generateDummyItems(10));
 		 grid.setDataProvider(dataprovider);
 		 
-		 Button addItemsButton = new Button("Add more items to Grid");
+		 Button addItemsButton = new Button("Add more items to Grid DataProvider");
 		 addItemsButton.addClickListener(event -> {
 			 dataprovider.getItems().addAll(generateDummyItems(10));
 			 dataprovider.refreshAll();
 		 });
-		 Button remItemsButton = new Button("Remove all items from Grid");
+		 Button remItemsButton = new Button("Remove all items from Grid DataProvider");
 		 remItemsButton.addClickListener(event -> {
 			 dataprovider.getItems().clear();
 			 dataprovider.refreshAll();
