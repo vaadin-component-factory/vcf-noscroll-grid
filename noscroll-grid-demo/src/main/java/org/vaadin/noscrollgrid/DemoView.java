@@ -41,7 +41,7 @@ public class DemoView extends Div {
 		 grid.addColumn(Item::getAge).setHeader("Age").setSortable(true);
 		 grid.addColumn(Item::getDob).setHeader("Birth date").setWidth("200px").setSortable(true);
 		 
-		 ListDataProvider<Item> dataprovider = new ListDataProvider<Item>(generateDummyItems(10));
+		 ListDataProvider<Item> dataprovider = new ListDataProvider<Item>(generateDummyItems(100));
 		 grid.setDataProvider(dataprovider);
 		 
 		 Button addItemsButton = new Button("Add more items to Grid DataProvider");
