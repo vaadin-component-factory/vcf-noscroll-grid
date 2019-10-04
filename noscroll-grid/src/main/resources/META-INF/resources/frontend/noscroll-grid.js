@@ -74,7 +74,12 @@ window.Vaadin.Flow.noscrollGridConnector = {
           // let's leave page-up/page-down to default handlers
           return;
       }
-      grid._onKeyDown(e);
+      grid.$noscrollConnector._keyDown = true;
+      try {
+        grid._onKeyDown(e);
+      } finally {
+        grid.$noscrollConnector._keyDown = false;
+      }
     };
 
     grid.$noscrollConnector.clearAllWheelTouchListeners = function() {
@@ -196,7 +201,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
         return;
       }
       grid.$.table.scrollTop = 0; // this will block scrolling
-      if(!grid.$noscrollConnector.initialScrollDone) {
+      if(grid.$noscrollConnector._keyDown && !grid.$noscrollConnector.initialScrollDone) {
         grid.$noscrollConnector.clearAllWheelTouchListeners();
         grid.$.table.addEventListener('wheel', grid.$.table.__wheelListener);
         grid.$noscrollConnector.initialScrollDone = true;
