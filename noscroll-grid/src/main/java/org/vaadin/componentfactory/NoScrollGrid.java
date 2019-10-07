@@ -66,6 +66,14 @@ public class NoScrollGrid<T> extends Grid<T> {
 	private Element targetScrollContainer;
 	
 	/**
+	 * When showMoreOnInit is true, grid height will be adjusted initially to show
+	 * more rows to force scroll bar to appear to scroll container. False means that
+	 * user has to use mouse wheel down/touch scroll to trigger event that shows
+	 * more rows.
+	 */
+	protected boolean showMoreOnInit = true;
+	
+	/**
 	 * @see com.vaadin.flow.component.grid.Grid#Grid()
 	 */
 	public NoScrollGrid() {
@@ -110,8 +118,8 @@ public class NoScrollGrid<T> extends Grid<T> {
 		getUI().orElseThrow(() -> new IllegalStateException(
 				"Connector can only be initialized for an attached Grid"))
 		.getPage()
-		.executeJavaScript("window.Vaadin.Flow.noscrollGridConnector.initLazy($0,$1)",
-				getElement(), getPageSize());
+		.executeJavaScript("window.Vaadin.Flow.noscrollGridConnector.initLazy($0,$1,$2)",
+				getElement(), getPageSize(), showMoreOnInit);
 	}
 	
 	/**

@@ -1,5 +1,5 @@
 window.Vaadin.Flow.noscrollGridConnector = {
-  initLazy: function(grid, pageSize) {
+  initLazy: function(grid, pageSize, showMoreOnInit) {
     if(grid.$noscrollConnector) {
       return;
     }
@@ -13,6 +13,19 @@ window.Vaadin.Flow.noscrollGridConnector = {
 
     grid.$noscrollConnector.scrollbarWidth = grid._scrollbarWidth;
     grid.$noscrollConnector.initialHeight = grid.style.height;
+
+    grid.$noscrollConnector.showMoreOnInit = showMoreOnInit;
+
+    grid.$noscrollConnector.showMoreAfterNextRender = function() {
+      if(grid.$noscrollConnector.initialScrollDone) {
+        return;
+      }
+      Polymer.RenderStatus.afterNextRender(grid.$.table, () => {
+        grid.showMore();
+        grid.$noscrollConnector.initialScrollDone = true;
+        grid.$noscrollConnector.resetOriginalGridWheelAndTouchListeners();
+      });
+    }
 
     const regularScrollHandler = e => {
       if(grid.$noscrollConnector.targetElement.offsetHeight + grid.$noscrollConnector.targetElement.scrollTop >= grid.$noscrollConnector.targetElement.scrollHeight) {
@@ -91,6 +104,11 @@ window.Vaadin.Flow.noscrollGridConnector = {
       grid.$.table.removeEventListener("wheel", wheelHandler);
     }
 
+    grid.$noscrollConnector.resetOriginalGridWheelAndTouchListeners = function() {
+      grid.$noscrollConnector.clearAllWheelTouchListeners();
+      grid.$.table.addEventListener('wheel', grid.$.table.__wheelListener);
+    }
+
     grid.setRowsShownMoreOnScrollToBottom = function(rowCount) {
       grid.$noscrollConnector.showMoreRows = rowCount;
     }
@@ -140,6 +158,10 @@ window.Vaadin.Flow.noscrollGridConnector = {
 
       grid.removeEventListener('keydown', grid._onKeyDown);
       grid.addEventListener('keydown', onKeyDown);
+
+      if(grid.$noscrollConnector.showMoreOnInit) {
+        grid.$noscrollConnector.showMoreAfterNextRender();
+      }
     }
 
     /* 'showMore' adjusts grid height. Increases height by showMoreRows when there are more items to show.
@@ -202,8 +224,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
       }
       grid.$.table.scrollTop = 0; // this will block scrolling
       if(grid.$noscrollConnector._keyDown && !grid.$noscrollConnector.initialScrollDone) {
-        grid.$noscrollConnector.clearAllWheelTouchListeners();
-        grid.$.table.addEventListener('wheel', grid.$.table.__wheelListener);
+        grid.$noscrollConnector.resetOriginalGridWheelAndTouchListeners();
         grid.$noscrollConnector.initialScrollDone = true;
       }
       grid.showMore();
