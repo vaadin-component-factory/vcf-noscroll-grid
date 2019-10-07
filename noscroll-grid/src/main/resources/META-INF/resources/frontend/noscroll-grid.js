@@ -222,12 +222,12 @@ window.Vaadin.Flow.noscrollGridConnector = {
 
     /* overriding function _scrollHandler to make sure that keyboard navigation do not scroll */
     grid._scrollHandler = function() {
-      if(!grid.$noscrollConnector.targetElement) {
+      if(!grid.$noscrollConnector.targetElement || !grid.$noscrollConnector._keyDown) {
         Vaadin.GridElement.prototype._scrollHandler.call(grid);
         return;
       }
       grid.$.table.scrollTop = 0; // this will block scrolling
-      if(grid.$noscrollConnector._keyDown && !grid.$noscrollConnector.initialScrollDone) {
+      if(!grid.$noscrollConnector.initialScrollDone) {
         grid.$noscrollConnector.resetOriginalGridWheelAndTouchListeners();
         grid.$noscrollConnector.initialScrollDone = true;
       }
