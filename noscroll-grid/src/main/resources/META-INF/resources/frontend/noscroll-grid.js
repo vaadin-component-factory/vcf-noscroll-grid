@@ -21,7 +21,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
         return;
       }
       grid.$noscrollConnector._debounceJob = Polymer.Debouncer.debounce(grid.$noscrollConnector._debounceJob, Polymer.Async.timeOut.after(20), () => {
-        if(!grid._cache.isLoading()) {
+        if(!grid.loading) {
           grid.showMore();
           grid.$noscrollConnector.initialScrollDone = true;
           grid.$noscrollConnector.resetOriginalGridWheelAndTouchListeners();
