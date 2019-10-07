@@ -52,7 +52,7 @@ public class BodyDemoView extends VerticalLayout {
 		 wrapper3.setSpacing(false);
 		 wrapper3.setPadding(false);
 		 
-		 NoScrollGrid<Item> grid = new NoScrollGrid<>(20);
+		 NoScrollGrid<Item> grid = new NoScrollGrid<>(50);
 		 grid.setShowMoreOnScrollToBottom(UI.getCurrent().getElement());
 		 grid.setMinHeight("100%");
 		 
@@ -60,7 +60,7 @@ public class BodyDemoView extends VerticalLayout {
 		 grid.addColumn(Item::getAge).setHeader("Age").setSortable(true);
 		 grid.addColumn(Item::getDob).setHeader("Birth date").setWidth("200px").setSortable(true);
 		 
-		 ListDataProvider<Item> dataprovider = new ListDataProvider<Item>(generateDummyItems(100));
+		 ListDataProvider<Item> dataprovider = new ListDataProvider<Item>(generateDummyItems(500));
 		 grid.setDataProvider(dataprovider);
 		 
 		 Button addItemsButton = new Button("Add more items to Grid DataProvider");
