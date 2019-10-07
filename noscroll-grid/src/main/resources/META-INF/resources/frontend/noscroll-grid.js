@@ -1,3 +1,5 @@
+import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+
 window.Vaadin.Flow.noscrollGridConnector = {
   initLazy: function(grid, pageSize, showMoreOnInit) {
     if(grid.$noscrollConnector) {
