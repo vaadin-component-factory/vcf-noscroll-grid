@@ -131,7 +131,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
       grid.$noscrollConnector.targetScrollTopElement.removeEventListener("scroll", bodyScrollHandler);
       grid.$noscrollConnector.clearAllWheelTouchListeners();
 
-      const msTouch = !!(navigator.maxTouchPoints > 0);
+      const msTouch = !('ontouchstart' in window) && !!(navigator.maxTouchPoints > 0);
       if(target === document.body) {
         grid.$noscrollConnector.targetScrollTopElement = window;
         if(msTouch) {
