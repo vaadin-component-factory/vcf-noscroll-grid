@@ -18,7 +18,7 @@ package org.vaadin.componentfactory;
 import java.util.Objects;
 
 import com.vaadin.flow.component.UI;
-import com.vaadin.flow.component.dependency.JavaScript;
+import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.provider.DataChangeEvent.DataRefreshEvent;
 import com.vaadin.flow.data.provider.DataProvider;
@@ -55,8 +55,7 @@ import com.vaadin.pro.licensechecker.LicenseChecker;
  * 
  * @param <T> the grid bean type
  */
-//@JsModule("./noscroll-grid.js")
-@JavaScript("frontend://noscroll-grid.js")
+@JsModule("./noscroll-grid.js")
 public class NoScrollGrid<T> extends Grid<T> {
 
 	private static String PROJECT_VERSION = "1.0.1";
@@ -118,7 +117,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 		getUI().orElseThrow(() -> new IllegalStateException(
 				"Connector can only be initialized for an attached Grid"))
 		.getPage()
-		.executeJavaScript("window.Vaadin.Flow.noscrollGridConnector.initLazy($0,$1,$2)",
+		.executeJs("window.Vaadin.Flow.noscrollGridConnector.initLazy($0,$1,$2)",
 				getElement(), getPageSize(), showMoreOnInit);
 	}
 	
@@ -133,7 +132,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 		super.setDataProvider(dataProvider);
 		dataProviderListener = dataProvider.addDataProviderListener(event -> {
             if (targetScrollContainer != null && !(event instanceof DataRefreshEvent)) {
-            	getElement().callFunction("resetHeight");
+            	getElement().callJsFunction("resetHeight");
             }
         });
 	}
@@ -144,7 +143,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 	 * does not have more rows to show.
 	 */
 	public void showMore() {
-		getElement().callFunction("showMore");
+		getElement().callJsFunction("showMore");
 	}
 	
 	/**
@@ -157,7 +156,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 			throw new IllegalArgumentException(getClass().getSimpleName()
 					+ ".setRowsShownMoreOnScrollToBottom(rows) requires integer larger than zero for 'rows'");
 		}
-		getElement().callFunction("setRowsShownMoreOnScrollToBottom", rows);
+		getElement().callJsFunction("setRowsShownMoreOnScrollToBottom", rows);
 	}
 	
 	/**
@@ -173,7 +172,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 		Objects.requireNonNull(targetScrollContainer, getClass().getSimpleName()
 				+ ".setShowMoreOnScrollToBottom(targetScrollContainer) requires non-null target element. One target scroll container per grid instance.");
 		this.targetScrollContainer = targetScrollContainer;
-		getElement().callFunction("setShowMoreOnScrollToBottom", targetScrollContainer);
+		getElement().callJsFunction("setShowMoreOnScrollToBottom", targetScrollContainer);
 	}
 	
 	/**
