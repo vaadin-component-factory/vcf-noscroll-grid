@@ -104,11 +104,6 @@
         	<version>${project.version}</version>
         </dependency>
         
-        <!-- <dependency>
-		    <groupId>com.vaadin</groupId>
-		    <artifactId>flow-server-compatibility-mode</artifactId>
-		</dependency> -->
-		
         <!-- Dummy data generator --> 
         <dependency>
 			<groupId>org.fluttercode.datafactory</groupId>
