@@ -16,14 +16,18 @@ window.Vaadin.Flow.noscrollGridConnector = {
 
     grid.$noscrollConnector.showMoreOnInit = showMoreOnInit;
 
-    grid.$noscrollConnector.showMoreAfterNextRender = function() {
+    grid.$noscrollConnector.showMoreAfterReady = function() {
       if(grid.$noscrollConnector.initialScrollDone) {
         return;
       }
-      Polymer.RenderStatus.afterNextRender(grid.$.table, () => {
-        grid.showMore();
-        grid.$noscrollConnector.initialScrollDone = true;
-        grid.$noscrollConnector.resetOriginalGridWheelAndTouchListeners();
+      grid.$noscrollConnector._debounceJob = Polymer.Debouncer.debounce(grid.$noscrollConnector._debounceJob, Polymer.Async.timeOut.after(20), () => {
+        if(!grid._cache.isLoading()) {
+          grid.showMore();
+          grid.$noscrollConnector.initialScrollDone = true;
+          grid.$noscrollConnector.resetOriginalGridWheelAndTouchListeners();
+        } else {
+          grid.$noscrollConnector.showMoreAfterReady();
+        }
       });
     }
 
@@ -117,7 +121,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
       if(!target) {
         return;
       }
-      if(!grid.style.minHeight) {
+      if(!grid.style.minHeight || "" === grid.style.minHeight) {
         grid.style.minHeight = grid.$noscrollConnector.initialHeight;
       }
       grid.pageSize = grid.$noscrollConnector.pageSize;
@@ -160,7 +164,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
       grid.addEventListener('keydown', onKeyDown);
 
       if(grid.$noscrollConnector.showMoreOnInit) {
-        grid.$noscrollConnector.showMoreAfterNextRender();
+        grid.$noscrollConnector.showMoreAfterReady();
       }
     }
 
