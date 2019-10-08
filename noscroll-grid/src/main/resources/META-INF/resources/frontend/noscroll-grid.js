@@ -13,7 +13,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
     grid.$noscrollConnector.targetScrollTopElement = null;
 
     // waiting time before showing more rows initially if grid is 'loading'
-    grid.$noscrollConnector.waitForLoadingMs = 100;
+    grid.$noscrollConnector.waitForLoadingMs = 50;
 
     grid.$noscrollConnector.scrollbarWidth = grid._scrollbarWidth;
     grid.$noscrollConnector.initialHeight = grid.style.height;

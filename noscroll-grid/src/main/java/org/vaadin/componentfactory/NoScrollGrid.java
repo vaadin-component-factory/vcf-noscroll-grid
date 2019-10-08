@@ -187,7 +187,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 	 * @param waitForLoadingTimeout Set milliseconds to wait before showing more
 	 *                              rows initially after grid is done loading. This
 	 *                              has effect only when {@link #showMoreOnInit} is
-	 *                              set to true (default). Default is 100
+	 *                              set to true (default). Default is 50
 	 *                              milliseconds. Zero or positive integer.
 	 */
 	public void setShowMoreOnScrollToBottom(Element targetScrollContainer, int waitForLoadingTimeout) {
