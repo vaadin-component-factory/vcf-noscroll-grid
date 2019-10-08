@@ -176,6 +176,25 @@ public class NoScrollGrid<T> extends Grid<T> {
 		getElement().callFunction("setShowMoreOnScrollToBottom", targetScrollContainer);
 	}
 	
+	/**
+	 * Set target scroll container. Does not add vertical scroll bar. Adds listener
+	 * to given element for scroll event into bottom to show more rows in grid. If
+	 * element does not have visible scroll bar, then it listens for mouse wheel
+	 * event and touch event to show more.
+	 * 
+	 * @param targetScrollContainer Target scroll container element. For example
+	 *                              body or div.
+	 * @param waitForLoadingTimeout Set milliseconds to wait before showing more
+	 *                              rows initially after grid is done loading. This
+	 *                              has effect only when {@link #showMoreOnInit} is
+	 *                              set to true (default). Default is 100
+	 *                              milliseconds. Zero or positive integer.
+	 */
+	public void setShowMoreOnScrollToBottom(Element targetScrollContainer, int waitForLoadingTimeout) {
+		getElement().callFunction("setWaitForLoading", waitForLoadingTimeout);
+		setShowMoreOnScrollToBottom(targetScrollContainer);
+	}
+	
 	private void verifyLicense(boolean productionMode) {
 		if (!productionMode) {
 			LicenseChecker.checkLicense(PROJECT_NAME, PROJECT_VERSION);

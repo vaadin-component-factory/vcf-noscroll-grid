@@ -7,9 +7,13 @@ window.Vaadin.Flow.noscrollGridConnector = {
     grid.$noscrollConnector.pageSize = pageSize;
     grid.$noscrollConnector.initialScrollDone = false;
     grid.$noscrollConnector.showMoreRows = 20;
+
     grid.$noscrollConnector.prevTouchScrollTop = 0;
     grid.$noscrollConnector.targetElement = null;
     grid.$noscrollConnector.targetScrollTopElement = null;
+
+    // waiting time before showing more rows initially if grid is 'loading'
+    grid.$noscrollConnector.waitForLoadingMs = 100;
 
     grid.$noscrollConnector.scrollbarWidth = grid._scrollbarWidth;
     grid.$noscrollConnector.initialHeight = grid.style.height;
@@ -20,7 +24,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
       if(grid.$noscrollConnector.initialScrollDone) {
         return;
       }
-      grid.$noscrollConnector._debounceJob = Polymer.Debouncer.debounce(grid.$noscrollConnector._debounceJob, Polymer.Async.timeOut.after(20), () => {
+      grid.$noscrollConnector._debounceJob = Polymer.Debouncer.debounce(grid.$noscrollConnector._debounceJob, Polymer.Async.timeOut.after(grid.$noscrollConnector.waitForLoadingMs), () => {
         if(!grid.loading) {
           grid.showMore();
           grid.$noscrollConnector.initialScrollDone = true;
@@ -194,6 +198,12 @@ window.Vaadin.Flow.noscrollGridConnector = {
     grid.resetHeight = function() {
       grid.style.height = grid.$noscrollConnector.initialHeight;
       grid.setShowMoreOnScrollToBottom(grid.$noscrollConnector.targetElement);
+    }
+
+    grid.setWaitForLoading = function(millisecondsToWait) {
+      if(millisecondsToWait >= 0) {
+        grid.$noscrollConnector.waitForLoadingMs = millisecondsToWait;
+      }
     }
 
     grid.$noscrollConnector.getShowMorePixelSize = function() {
