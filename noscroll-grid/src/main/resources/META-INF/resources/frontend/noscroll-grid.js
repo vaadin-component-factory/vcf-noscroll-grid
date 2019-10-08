@@ -1,4 +1,5 @@
-import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
+import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 
 window.Vaadin.Flow.noscrollGridConnector = {
   initLazy: function(grid, pageSize, showMoreOnInit) {
@@ -29,7 +30,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
       if(grid.$noscrollConnector.initialScrollDone) {
         return;
       }
-      grid.$noscrollConnector._debounceJob = Polymer.Debouncer.debounce(grid.$noscrollConnector._debounceJob, Polymer.Async.timeOut.after(grid.$noscrollConnector.waitForLoadingMs), () => {
+      grid.$noscrollConnector._debounceJob = Debouncer.debounce(grid.$noscrollConnector._debounceJob, timeOut.after(grid.$noscrollConnector.waitForLoadingMs), () => {
         if(!grid.loading) {
           grid.showMore();
           grid.$noscrollConnector.initialScrollDone = true;
