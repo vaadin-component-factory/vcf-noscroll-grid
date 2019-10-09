@@ -59,7 +59,7 @@ import com.vaadin.pro.licensechecker.LicenseChecker;
 @JavaScript("frontend://noscroll-grid.js")
 public class NoScrollGrid<T> extends Grid<T> {
 
-	private static String PROJECT_VERSION = "1.0.0";
+	private static String PROJECT_VERSION = "1.0.1";
     private static String PROJECT_NAME = "vcf-noscroll-grid";
     
 	private Registration dataProviderListener;
