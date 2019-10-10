@@ -18,6 +18,7 @@ package org.vaadin.componentfactory;
 import java.util.Objects;
 
 import com.vaadin.flow.component.UI;
+import com.vaadin.flow.component.dependency.CssImport;
 import com.vaadin.flow.component.dependency.JsModule;
 import com.vaadin.flow.component.grid.Grid;
 import com.vaadin.flow.data.provider.DataChangeEvent.DataRefreshEvent;
@@ -56,6 +57,7 @@ import com.vaadin.pro.licensechecker.LicenseChecker;
  * @param <T> the grid bean type
  */
 @JsModule("./noscroll-grid.js")
+@CssImport("./noscroll-grid-spinner.css")
 public class NoScrollGrid<T> extends Grid<T> {
 
 	private static String PROJECT_VERSION = "2.0.0";
@@ -86,6 +88,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 	 */
 	public NoScrollGrid(int pageSize) {
 		super(pageSize);
+		addClassName("show-spinner");
 		setRowsShownMoreOnScrollToBottom(getPageSize());
 		verifyLicense(UI.getCurrent().getSession().getConfiguration().isProductionMode());
 	}
