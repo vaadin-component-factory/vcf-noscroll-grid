@@ -188,7 +188,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
         return;
       }
       grid._toggleAttribute('showmore', true, grid);
-      afterNextRender(grid, () => {
+      Polymer.RenderStatus.afterNextRender(grid, () => {
         let newGridHeightWithoutBorder = this.$.scroller.clientHeight + grid.$noscrollConnector.getShowMorePixelSize();
         this.style.height = newGridHeightWithoutBorder + grid.$noscrollConnector.borderWidthTotal + 'px';
         this.notifyResize();
@@ -205,7 +205,7 @@ window.Vaadin.Flow.noscrollGridConnector = {
           this.notifyResize();
         }
 
-        afterNextRender(grid, () => {
+        Polymer.RenderStatus.afterNextRender(grid, () => {
           grid._toggleAttribute('showmore', false, grid);
         });
       });
