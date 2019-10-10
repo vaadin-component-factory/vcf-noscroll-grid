@@ -57,6 +57,7 @@ import com.vaadin.pro.licensechecker.LicenseChecker;
  */
 //@JsModule("./noscroll-grid.js")
 @JavaScript("frontend://noscroll-grid.js")
+@CssImport("./noscroll-grid-spinner.css")
 public class NoScrollGrid<T> extends Grid<T> {
 
 	private static String PROJECT_VERSION = "1.0.1";
@@ -87,6 +88,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 	 */
 	public NoScrollGrid(int pageSize) {
 		super(pageSize);
+		addClassName("show-spinner");
 		setRowsShownMoreOnScrollToBottom(getPageSize());
 		verifyLicense(UI.getCurrent().getSession().getConfiguration().isProductionMode());
 	}

@@ -20,6 +20,8 @@ window.Vaadin.Flow.noscrollGridConnector = {
 
     grid.$noscrollConnector.showMoreOnInit = showMoreOnInit;
 
+    grid.$noscrollConnector.borderWidthTotal = undefined;
+
     grid.$noscrollConnector.showMoreAfterReady = function() {
       if(grid.$noscrollConnector.initialScrollDone) {
         return;
@@ -178,21 +180,35 @@ window.Vaadin.Flow.noscrollGridConnector = {
       if(!grid.$noscrollConnector.targetElement) {
         return;
       }
-      let newGridHeight = this.$.scroller.clientHeight + grid.$noscrollConnector.getShowMorePixelSize();
-      this.style.height = newGridHeight + 'px';
-      this.notifyResize();
-
-      const table = this.$.table;
-      let contentHeight = this.$.items.clientHeight + this.$.header.clientHeight + this.$.footer.clientHeight;
-      if((table.scrollLeft < table.scrollWidth - table.clientWidth) || table.scrollLeft > 0) {
-        // grid has horizontal scroll bar
-        contentHeight += grid.$noscrollConnector.scrollbarWidth;
+      if(grid.$noscrollConnector.borderWidthTotal === undefined) {
+        grid.$noscrollConnector.borderWidthTotal = grid.getBoundingClientRect().bottom - grid.getBoundingClientRect().top - this.$.scroller.clientHeight;
       }
-
-      if(contentHeight < newGridHeight) {
-        this.style.height = contentHeight + 'px';
+      if(grid.size == grid._physicalCount
+          && (this.$.scroller.clientHeight == this.$.items.clientHeight + this.$.header.clientHeight + this.$.footer.clientHeight)) {
+        return;
+      }
+      grid._toggleAttribute('showmore', true, grid);
+      afterNextRender(grid, () => {
+        let newGridHeightWithoutBorder = this.$.scroller.clientHeight + grid.$noscrollConnector.getShowMorePixelSize();
+        this.style.height = newGridHeightWithoutBorder + grid.$noscrollConnector.borderWidthTotal + 'px';
         this.notifyResize();
-      }
+
+        const table = this.$.table;
+        let contentHeight = this.$.items.clientHeight + this.$.header.clientHeight + this.$.footer.clientHeight;
+        if((table.scrollLeft < table.scrollWidth - table.clientWidth) || table.scrollLeft > 0) {
+          // grid has horizontal scroll bar
+          contentHeight += grid.$noscrollConnector.scrollbarWidth;
+        }
+
+        if(contentHeight < newGridHeightWithoutBorder) {
+          this.style.height = contentHeight + grid.$noscrollConnector.borderWidthTotal + 'px';
+          this.notifyResize();
+        }
+
+        afterNextRender(grid, () => {
+          grid._toggleAttribute('showmore', false, grid);
+        });
+      });
     }
 
     grid.resetHeight = function() {
