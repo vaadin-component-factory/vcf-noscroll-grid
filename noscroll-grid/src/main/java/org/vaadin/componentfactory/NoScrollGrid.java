@@ -60,7 +60,7 @@ import com.vaadin.pro.licensechecker.LicenseChecker;
 @StyleSheet("frontend://noscroll-grid-spinner.css")
 public class NoScrollGrid<T> extends Grid<T> {
 
-	private static String PROJECT_VERSION = "1.0.1";
+	private static String PROJECT_VERSION = "1.0.2";
     private static String PROJECT_NAME = "vcf-noscroll-grid";
     
 	private Registration dataProviderListener;
