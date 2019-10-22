@@ -45,12 +45,12 @@ window.Vaadin.Flow.noscrollGridConnector = {
     }
 
     const regularScrollHandler = e => {
-      if(grid.$noscrollConnector.targetElement.offsetHeight + grid.$noscrollConnector.targetElement.scrollTop >= grid.$noscrollConnector.targetElement.scrollHeight) {
+      if(grid.$noscrollConnector.targetElement.offsetHeight + grid.$noscrollConnector.targetElement.scrollTop >= (grid.$noscrollConnector.targetElement.scrollHeight - 30)) {
         grid.showMore();
       }
     };
     const bodyScrollHandler = e => {
-      if(grid.$noscrollConnector.targetElement.offsetHeight + grid.$noscrollConnector.targetScrollTopElement.scrollY >= grid.$noscrollConnector.targetElement.scrollHeight) {
+      if(grid.$noscrollConnector.targetElement.offsetHeight + grid.$noscrollConnector.targetScrollTopElement.scrollY >= (grid.$noscrollConnector.targetElement.scrollHeight - 30)) {
         grid.showMore();
       }
     };
