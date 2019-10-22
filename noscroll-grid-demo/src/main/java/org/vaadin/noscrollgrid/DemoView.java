@@ -29,7 +29,7 @@ public class DemoView extends Div {
 		 getStyle().set("display", "flex");
 		 getStyle().set("flex-direction", "column");
 		 
-		 HorizontalLayout layout = new HorizontalLayout();
+		 VerticalLayout layout = new VerticalLayout();
 		 layout.setWidthFull();
 		 layout.getStyle().set("flex-grow", "1");
 		 
