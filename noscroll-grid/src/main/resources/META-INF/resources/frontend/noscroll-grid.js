@@ -268,5 +268,15 @@ window.Vaadin.Flow.noscrollGridConnector = {
       GridElement.prototype._scrollHandler.call(grid);
     }
 
+    /* overriding function _detailsOpenedItemsChanged to show vertical scollbar if needed when details are opened */
+    grid._detailsOpenedItemsChanged = function(changeRecord, rowDetailsTemplate, rowDetailsRenderer) {
+    	GridElement.prototype._detailsOpenedItemsChanged.call(grid, changeRecord, rowDetailsTemplate, rowDetailsRenderer);
+      if(changeRecord && changeRecord.value.length > 0 && grid.$noscrollConnector.initialScrollDone && grid.style.height == grid.$noscrollConnector.initialHeight) {
+        afterNextRender(grid, () => {
+          // Calling showMore() here will grow grid based of 'showMoreRows' number and makes scrollbar visible.
+          grid.showMore();
+        });
+      }
+    }
   }
 }
