@@ -57,9 +57,6 @@ import com.vaadin.flow.shared.Registration;
 @CssImport("./noscroll-grid-spinner.css")
 public class NoScrollGrid<T> extends Grid<T> {
 
-	private static String PROJECT_VERSION = "2.0.1";
-    private static String PROJECT_NAME = "vcf-noscroll-grid";
-    
 	private Registration dataProviderListener;
 	private Element targetScrollContainer;
 	
@@ -189,7 +186,7 @@ public class NoScrollGrid<T> extends Grid<T> {
 	 *                              milliseconds. Zero or positive integer.
 	 */
 	public void setShowMoreOnScrollToBottom(Element targetScrollContainer, int waitForLoadingTimeout) {
-		getElement().callFunction("setWaitForLoading", waitForLoadingTimeout);
+		getElement().callJsFunction("setWaitForLoading", waitForLoadingTimeout);
 		setShowMoreOnScrollToBottom(targetScrollContainer);
 	}
 }
