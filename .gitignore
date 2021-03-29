@@ -12,3 +12,13 @@ target
 
 **/package-lock.json
 **/bower_components/
+
+.npmrc
+package.json
+webpack*.js
+tsconfig.json
+types.d.ts
+pnpmfile.js
+pnpm-lock.yaml
+
+**/frontend/generated/
