@@ -1,4 +1,4 @@
-# Component Factory NoScrollGrid for Vaadin 14
+# Component Factory NoScrollGrid for Vaadin 19+
 
 Extension for Grid to delegate vertical scrolling outside the Grid's scroll container. Grid itself will never show vertical scroll bar. Scrolling down to bottom of the target scroll container (or optionally mouse wheel down/touchmove event) will increase grid's height automatically by predefined number of rows.  
 Grid's data provider defines the maximum size Grid can grow. Higher the Grid is set initially or by scrolling, more rows are being fetched and cached in client.  

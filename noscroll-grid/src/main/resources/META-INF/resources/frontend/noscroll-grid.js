@@ -1,14 +1,13 @@
 import { Debouncer } from '@polymer/polymer/lib/utils/debounce.js';
 import { timeOut } from '@polymer/polymer/lib/utils/async.js';
 import { afterNextRender } from '@polymer/polymer/lib/utils/render-status.js';
+import { GridElement } from '@vaadin/vaadin-grid';
 
 window.Vaadin.Flow.noscrollGridConnector = {
   initLazy: function(grid, pageSize, showMoreOnInit) {
     if(grid.$noscrollConnector) {
       return;
     }
-
-    const GridElement = window.Vaadin.Flow.Legacy.GridElement;
 
     grid.$noscrollConnector = {};
     grid.$noscrollConnector.pageSize = pageSize;
