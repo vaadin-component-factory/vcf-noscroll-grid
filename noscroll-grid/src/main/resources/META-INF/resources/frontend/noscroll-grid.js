@@ -190,8 +190,8 @@ window.Vaadin.Flow.noscrollGridConnector = {
       if(grid.$noscrollConnector.borderWidthTotal === undefined) {
         grid.$noscrollConnector.borderWidthTotal = grid.getBoundingClientRect().bottom - grid.getBoundingClientRect().top - this.$.scroller.clientHeight;
       }
-      if(grid.size == grid._physicalCount
-          && (this.$.scroller.clientHeight == this.$.items.clientHeight + this.$.header.clientHeight + this.$.footer.clientHeight)) {
+      if(grid.size <= grid._physicalCount
+          && (this.$.scroller.clientHeight >= this.$.items.clientHeight + this.$.header.clientHeight + this.$.footer.clientHeight)) {
         return;
       }
       grid._toggleAttribute('showmore', true, grid);
