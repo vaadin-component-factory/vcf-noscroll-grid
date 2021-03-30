@@ -52,12 +52,8 @@ See demo page for body-element as scroll container at http://localhost:8080/body
 
 To contribute to the component, please read [the guideline](https://github.com/vaadin/vaadin-core/blob/master/CONTRIBUTING.md) first.
 
-## Vaadin Prime
-
-This component is available in the Vaadin Prime subscription. It is still open source, but you need to have a valid CVAL license in order to use it. Read more at: https://vaadin.com/pricing
-
 ## License
 
-Commercial Vaadin Add-on License version 3 (CVALv3). For license terms, see LICENSE.
+This Add-on is distributed under Apache 2.0.
 
-Vaadin collects development time usage statistics to improve this product. For details and to opt-out, see https://github.com/vaadin/vaadin-usage-statistics.
+Component Factory NoScrollGrid is written by Vaadin Ltd.
