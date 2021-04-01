@@ -195,26 +195,42 @@ window.Vaadin.Flow.noscrollGridConnector = {
       }
       grid._toggleAttribute('showmore', true, grid);
       afterNextRender(grid, () => {
-        let newGridHeightWithoutBorder = this.$.scroller.clientHeight + grid.$noscrollConnector.getShowMorePixelSize();
-        this.style.height = newGridHeightWithoutBorder + grid.$noscrollConnector.borderWidthTotal + 'px';
-        this.notifyResize();
+        let newGridHeightWithoutBorder = grid.$.scroller.clientHeight + grid.$noscrollConnector.getShowMorePixelSize();
+        grid.style.height = newGridHeightWithoutBorder + grid.$noscrollConnector.borderWidthTotal + 'px';
+        grid.notifyResize();
 
-        const table = this.$.table;
-        let contentHeight = this.$.items.clientHeight + this.$.header.clientHeight + this.$.footer.clientHeight;
-        if((table.scrollLeft < table.scrollWidth - table.clientWidth) || table.scrollLeft > 0) {
-          // grid has horizontal scroll bar
+        const table = grid.$.table;
+        let contentHeight = grid.$.items.clientHeight + grid.$.header.clientHeight + grid.$.footer.clientHeight;
+        if(grid._hasHorizontalScrollBar()) {
           contentHeight += grid.$noscrollConnector.scrollbarWidth;
         }
 
         if(contentHeight < newGridHeightWithoutBorder) {
-          this.style.height = contentHeight + grid.$noscrollConnector.borderWidthTotal + 'px';
-          this.notifyResize();
+          grid.style.height = contentHeight + grid.$noscrollConnector.borderWidthTotal + 'px';
+          grid.notifyResize();
         }
 
         afterNextRender(grid, () => {
           grid._toggleAttribute('showmore', false, grid);
         });
       });
+    }
+
+    grid._trimHeightToFit = function() {
+      const table = grid.$.table;
+      let contentHeight = grid._physicalBottom + grid.$.header.clientHeight + grid.$.footer.clientHeight;
+      if(grid._hasHorizontalScrollBar()) {
+        contentHeight += grid.$noscrollConnector.scrollbarWidth;
+      }
+      if(contentHeight < grid.$.scroller.clientHeight) {
+        grid.style.height = contentHeight + grid.$noscrollConnector.borderWidthTotal + 'px';
+        grid.notifyResize();
+      }
+    }
+
+    grid._hasHorizontalScrollBar = function() {
+      const table = grid.$.table;
+      return (table.scrollLeft < table.scrollWidth - table.clientWidth) || table.scrollLeft > 0;
     }
 
     grid.resetHeight = function() {
@@ -274,6 +290,9 @@ window.Vaadin.Flow.noscrollGridConnector = {
         afterNextRender(grid, () => {
           // Calling showMore() here will grow grid based of 'showMoreRows' number and makes scrollbar visible.
           grid.showMore();
+          afterNextRender(grid, () => {
+            grid._trimHeightToFit();
+          });
         });
       }
     }
